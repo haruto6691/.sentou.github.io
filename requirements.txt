@@ -5,7 +5,6 @@ pandas
 datetime
 watchdog
 Observer
-threading
 time
 matplotlib
 numpy
