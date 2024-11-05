@@ -11,5 +11,5 @@ watchdog.events
 FileSystemEventHandler
 threading
 time
-matplotlib.pyplot as plt
-numpy as np
+matplotlib
+numpy
