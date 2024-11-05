@@ -60,7 +60,7 @@ def get_icon_path(condition):
     elif condition >= 0.6:
         return '255_051_051.png'   # condition>=60%:  赤(255, 51, 51)
     elif condition >= 0.4:
-        return '255_153_1530.png' # condition>=40%:  赤(255, 153, 153)
+        return '255_153_153.png' # condition>=40%:  赤(255, 153, 153)
     else:
         return '255_230_230.png' # condition>=0%:   赤(255, 230, 230)
 
