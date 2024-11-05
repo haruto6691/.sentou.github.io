@@ -3,9 +3,8 @@ streamlit_folium
 streamlit
 pandas 
 datetime
-watchdog.observers
+watchdog
 Observer
-watchdog.events
 FileSystemEventHandler
 threading
 time
