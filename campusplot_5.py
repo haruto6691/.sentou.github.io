@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # JSONファイルのパス
-json_file_path = 'C:/Users/harut/fluid/campusOS/haruto/data.json'
+json_file_path = 'C:\Users\harut\OneDrive\デスクトップ\研究用\campusos\test\data.json'
 
 # JSONデータの読み込み関数
 def load_json_data():
@@ -56,13 +56,13 @@ campus_data = pd.DataFrame(
 # 条件に基づくカスタムアイコン画像のパスを設定する関数
 def get_icon_path(condition):
     if condition >= 0.8:
-        return 'C:/Users/harut/fluid/campusOS/haruto/153_000_000.png'     # condition>=80%:  赤(153, 0, 0)
+        return 'C:\Users\harut\OneDrive\デスクトップ\研究用\campusos\test\153_000_000.png'     # condition>=80%:  赤(153, 0, 0)
     elif condition >= 0.6:
-        return 'C:/Users/harut/fluid/campusOS/haruto/255_051_051.png'   # condition>=60%:  赤(255, 51, 51)
+        return 'C:\Users\harut\OneDrive\デスクトップ\研究用\campusos\test\255_051_051.png'   # condition>=60%:  赤(255, 51, 51)
     elif condition >= 0.4:
-        return 'C:/Users/harut/fluid/campusOS/haruto/255_153_153.png' # condition>=40%:  赤(255, 153, 153)
+        return 'C:\Users\harut\OneDrive\デスクトップ\研究用\campusos\test\255_153_1530.png' # condition>=40%:  赤(255, 153, 153)
     else:
-        return 'C:/Users/harut/fluid/campusOS/haruto/255_230_230.png' # condition>=0%:   赤(255, 230, 230)
+        return 'C:\Users\harut\OneDrive\デスクトップ\研究用\campusos\test\255_230_230.png' # condition>=0%:   赤(255, 230, 230)
 
 # データを地図に渡す関数を作成
 def AreaMarker(df, m):
