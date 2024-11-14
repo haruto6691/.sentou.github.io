@@ -7,3 +7,5 @@ watchdog
 Observer
 matplotlib
 numpy
+mysql-connector-python
+paho-mqtt
