@@ -12,7 +12,7 @@ try:
     db_connection = mysql.connector.connect(
         host="seikeidb.mysql.database.azure.com",
         user="soc5admin",
-        password="eat5Mae\ze",
+        password="eat5Mae\\ze",
         database="campusOS"
     )
     
