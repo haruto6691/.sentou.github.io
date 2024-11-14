@@ -7,55 +7,55 @@ import streamlit as st
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-# MySQLデータベースに接続
-try:
-    db_connection = mysql.connector.connect(
-        host="seikeidb.mysql.database.azure.com",
-        user="soc5admin",
-        password="eat5Mae\\ze",
-        database="campusOS"
-    )
+# # MySQLデータベースに接続
+# try:
+#     db_connection = mysql.connector.connect(
+#         host="seikeidb.mysql.database.azure.com",
+#         user="soc5admin",
+#         password="eat5Mae\\ze",
+#         database="campusOS"
+#     )
     
-    cursor = db_connection.cursor()
+#     cursor = db_connection.cursor()
 
-    # 最新のデータを取得するSQLクエリ
-    query = """
-        SELECT line_count.device_id, line_count.timestamp, line_count.people_inside
-        FROM line_count
-        JOIN (
-            SELECT device_id, MAX(timestamp) AS latest_timestamp
-            FROM line_count
-            GROUP BY device_id
-        ) AS latest_data
-        ON line_count.device_id = latest_data.device_id
-        AND line_count.timestamp = latest_data.latest_timestamp;
-    """
+#     # 最新のデータを取得するSQLクエリ
+#     query = """
+#         SELECT line_count.device_id, line_count.timestamp, line_count.people_inside
+#         FROM line_count
+#         JOIN (
+#             SELECT device_id, MAX(timestamp) AS latest_timestamp
+#             FROM line_count
+#             GROUP BY device_id
+#         ) AS latest_data
+#         ON line_count.device_id = latest_data.device_id
+#         AND line_count.timestamp = latest_data.latest_timestamp;
+#     """
     
-    # クエリ実行
-    cursor.execute(query)
+#     # クエリ実行
+#     cursor.execute(query)
 
-    # 結果を取得
-    rows = cursor.fetchall()
+#     # 結果を取得
+#     rows = cursor.fetchall()
 
-    # 結果を格納する変数
-    device_people_list = []  # デバイスIDと人数を格納するリスト
+#     # 結果を格納する変数
+#     device_people_list = []  # デバイスIDと人数を格納するリスト
 
-    # device_id と人数をセットで格納
-    for row in rows:
-        device_id = row[0]  # device_id
-        people_inside = row[2]  # people_inside
+#     # device_id と人数をセットで格納
+#     for row in rows:
+#         device_id = row[0]  # device_id
+#         people_inside = row[2]  # people_inside
 
-        # 結果をリストにタプルとして格納
-        device_people_list.append((device_id, people_inside))
+#         # 結果をリストにタプルとして格納
+#         device_people_list.append((device_id, people_inside))
 
-except mysql.connector.Error as err:
-    st.error(f"Error: {err}")
+# except mysql.connector.Error as err:
+#     st.error(f"Error: {err}")
 
-finally:
-    # 接続を閉じる
-    if db_connection.is_connected():
-        cursor.close()
-        db_connection.close()
+# finally:
+#     # 接続を閉じる
+#     if db_connection.is_connected():
+#         cursor.close()
+#         db_connection.close()
 
 # ------------------------マップ用のデータ作成（読み込み）------------------------
 
