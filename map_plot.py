@@ -202,3 +202,11 @@ if st.button("リロード"):
 
 # 最後の更新時刻を表示
 st.write(f"最終更新時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+#-----------------------------------------------------------------------
+import requests
+
+# ipify APIを使ってグローバルIPアドレスを取得
+ip_address = requests.get('https://api.ipify.org').text
+
+st.write(f"Your global IP address is: {ip_address}")
