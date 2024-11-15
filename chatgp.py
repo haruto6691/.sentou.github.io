@@ -22,10 +22,10 @@ st.write(f"Your global IP address is: {ip_address}")
 # MySQLデータベースに接続
 try:
     db_connection = mysql.connector.connect(
-        host="seikeidb.mysql.database.azure.com",
-        user="soc5admin",
-        password="eat5Mae\\ze",
-        database="campusOS"
+        host="s.com",
+        user="s",
+        password="e",
+        database="t"
     )
     
     cursor = db_connection.cursor()
@@ -138,22 +138,17 @@ def get_icon_path(condition):
 # データを地図に渡す関数
 def AreaMarker(df, m):
     for index, r in df.iterrows():
-         # 施設名と混雑状況を動的に取得
-        facility_name = index
-        people_inside = r['people_inside']
-        condition = r['condition']
-        
-        # 施設ごとに動的にポップアップを作成
+        # 条件に基づいた画像アイコンパスを取得
+        icon_path = get_icon_path(r['condition'])
+
         popup_content = f"""
         <div style="width:200px;">
-            <strong>{facility_name}</strong><br>
-            人数: {people_inside}人<br>
-            混雑率: {condition*100:.0f}%<br>
-            最大収容人数: {r['people_max']}人<br>
+            <strong>{index}</strong><br>
+            人数: {r['people_inside']}人<br>
+            混雑率: {r['condition']*100:.0f}%<br>
             <a href="https://x.gd/TJMyb" target="_blank">食堂メニュー等</a>
         </div>
         """
-        
         popup = folium.Popup(popup_content, max_width=300)
 
         # カスタムアイコンを作成
