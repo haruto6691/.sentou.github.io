@@ -138,6 +138,10 @@ def get_icon_path(condition):
 # データを地図に渡す関数
 def AreaMarker(df, m):
     for index, r in df.iterrows():
+        
+         # 条件に基づいた画像アイコンパスを取得
+        icon_path = get_icon_path(r['condition'])
+        
          # 施設名と混雑状況を動的に取得
         facility_name = index
         people_inside = r['people_inside']
