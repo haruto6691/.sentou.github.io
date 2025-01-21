@@ -6,68 +6,64 @@ from streamlit_folium import folium_static
 import streamlit as st
 from datetime import datetime
 import matplotlib.pyplot as plt
-
-
-
-#-----------------------------------------------------------------------
 import requests
 
-# ipify APIを使ってグローバルIPアドレスを取得
-ip_address = requests.get('https://api.ipify.org').text
-
-st.write(f"Your global IP address is: {ip_address}")
 #-----------------------------------------------------------------------
+# # ipify APIを使ってグローバルIPアドレスを取得
+# ip_address = requests.get('https://api.ipify.org').text
 
+# st.write(f"Your global IP address is: {ip_address}")
+# #-----------------------------------------------------------------------
 
-# MySQLデータベースに接続
-try:
-    db_connection = mysql.connector.connect(
-        host="seikeidb.mysql.database.azure.com",
-        user="soc5admin",
-        password="eat5Mae\\ze",
-        database="campusOS"
-    )
+# # MySQLデータベースに接続
+# try:
+#     db_connection = mysql.connector.connect(
+#         host="seikeidb.mysql.database.azure.com",
+#         user="soc5admin",
+#         password="eat5Mae\\ze",
+#         database="campusOS"
+#     )
     
-    cursor = db_connection.cursor()
+#     cursor = db_connection.cursor()
 
-    # 最新のデータを取得するSQLクエリ
-    query = """
-        SELECT line_count.device_id, line_count.timestamp, line_count.people_inside
-        FROM line_count
-        JOIN (
-            SELECT device_id, MAX(timestamp) AS latest_timestamp
-            FROM line_count
-            GROUP BY device_id
-        ) AS latest_data
-        ON line_count.device_id = latest_data.device_id
-        AND line_count.timestamp = latest_data.latest_timestamp;
-    """
+#     # 最新のデータを取得するSQLクエリ
+#     query = """
+#         SELECT line_count.device_id, line_count.timestamp, line_count.people_inside
+#         FROM line_count
+#         JOIN (
+#             SELECT device_id, MAX(timestamp) AS latest_timestamp
+#             FROM line_count
+#             GROUP BY device_id
+#         ) AS latest_data
+#         ON line_count.device_id = latest_data.device_id
+#         AND line_count.timestamp = latest_data.latest_timestamp;
+#     """
     
-    # クエリ実行
-    cursor.execute(query)
+#     # クエリ実行
+#     cursor.execute(query)
 
-    # 結果を取得
-    rows = cursor.fetchall()
+#     # 結果を取得
+#     rows = cursor.fetchall()
 
-    # 結果を格納する変数
-    device_people_list = []  # デバイスIDと人数を格納するリスト
+#     # 結果を格納する変数
+#     device_people_list = []  # デバイスIDと人数を格納するリスト
 
-    # device_id と人数をセットで格納
-    for row in rows:
-        device_id = row[0]  # device_id
-        people_inside = row[2]  # people_inside
+#     # device_id と人数をセットで格納
+#     for row in rows:
+#         device_id = row[0]  # device_id
+#         people_inside = row[2]  # people_inside
 
-        # 結果をリストにタプルとして格納
-        device_people_list.append((device_id, people_inside))
+#         # 結果をリストにタプルとして格納
+#         device_people_list.append((device_id, people_inside))
 
-except mysql.connector.Error as err:
-    st.error(f"Error: {err}")
+# except mysql.connector.Error as err:
+#     st.error(f"Error: {err}")
 
-finally:
-    # 接続を閉じる
-    if db_connection.is_connected():
-        cursor.close()
-        db_connection.close()
+# finally:
+#     # 接続を閉じる
+#     if db_connection.is_connected():
+#         cursor.close()
+#         db_connection.close()
 
 # ------------------------マップ用のデータ作成（読み込み）------------------------
 
@@ -124,13 +120,113 @@ facility_capacity = {
 
 campus_data["people_max"] = campus_data.index.map(lambda name: facility_capacity.get(name, 100))  # 最大収容人数設定
 
+# 各施設のカスタムポップアップ情報を辞書として定義
+facility_popup_info = {
+    "学生食堂": {
+        "description": "学生向けの食堂です。",
+        "menu_link": "https://x.gd/TJMyb",
+        "open_time": "11:00 - 14:00",
+        "additional_info": "メニューはこちら！"
+    },
+    "トラスコンガーデン": {
+        "description": "トラスコンガーデン内のカフェです。",
+        "menu_link": "https://example.com/cafe_menu",
+        "open_time": "09:00 - 18:00",
+        "additional_info": "ゆっくり過ごせるスペースです。"
+    },
+    "1号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "2号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "3号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "4号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "5号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "6号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "7号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "8号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "9号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "10号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "11号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "新11号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "12号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+    "14号館": {
+        "description": "1号館の会議室です。",
+        "menu_link": "https://example.com/room1",
+        "open_time": "09:00 - 17:00",
+        "additional_info": "会議やイベントに使用できます。"
+    },
+}
+
 # 条件に基づくカスタムアイコン画像のパスを設定する関数
 def get_icon_path(condition):
-    if condition >= 0.8:
+    if condition >= 0.75:
         return '153_000_000.png'     # condition>=80%: 赤(153, 0, 0)
-    elif condition >= 0.6:
+    elif condition >= 0.50:
         return '255_051_051.png'     # condition>=60%: 赤(255, 51, 51)
-    elif condition >= 0.4:
+    elif condition >= 0.25:
         return '255_153_153.png'     # condition>=40%: 赤(255, 153, 153)
     else:
         return '255_230_230.png'     # condition<40%: 薄い赤
@@ -139,25 +235,27 @@ def get_icon_path(condition):
 def AreaMarker(df, m):
     for index, r in df.iterrows():
         
-         # 条件に基づいた画像アイコンパスを取得
-        icon_path = get_icon_path(r['condition'])
-        
          # 施設名と混雑状況を動的に取得
         facility_name = index
         people_inside = r['people_inside']
         condition = r['condition']
         
-        # 施設ごとに動的にポップアップを作成
+         # 施設ごとのカスタムポップアップ情報を取得
+        popup_info = facility_popup_info.get(facility_name, {})
+        
+        # カスタムポップアップ内容を作成
         popup_content = f"""
         <div style="width:200px;">
             <strong>{facility_name}</strong><br>
             人数: {people_inside}人<br>
             混雑率: {condition*100:.0f}%<br>
-            最大収容人数: {r['people_max']}人<br>
-            <a href="https://x.gd/TJMyb" target="_blank">食堂メニュー等</a>
+            営業時間: {popup_info.get('open_time', '不明')}<br>
+            {popup_info.get('description', '詳細情報はありません。')}<br>
+            <a href="{popup_info.get('menu_link', '#')}" target="_blank">{popup_info.get('additional_info', '')}</a><br>
         </div>
         """
         
+        icon_path = get_icon_path(condition)
         popup = folium.Popup(popup_content, max_width=300)
 
         # カスタムアイコンを作成
@@ -169,16 +267,48 @@ def AreaMarker(df, m):
             icon=icon
         ).add_to(m)
 
-# 各施設に対応する `device_id` と `people_inside` をキャンパスマップに反映
-for device_id, people_inside in device_people_list:
-    # device_id を使って施設名を取得
-    device_id_number = int(device_id.split('-')[0])  # "1-people-count" から "1" を取り出す
+# ------------------------ 学生食堂以外にランダムな人数を設定 ------------------------
+
+# 施設ごとに指定した人数を設定
+campus_data['people_inside'] = {
+    "学生食堂": 488,
+    "トラスコンガーデン": 100,
+    "1号館": 60,
+    "2号館": 80,
+    "3号館": 90,
+    "4号館": 40,
+    "5号館": 70,
+    "6号館": 10,
+    "7号館": 10,
+    "8号館": 75,
+    "9号館": 40,
+    "10号館": 90,
+    "11号館": 100,
+    "新11号館": 20,
+    "12号館": 50,
+    "14号館": 80
+}
+
+# # 学生食堂の人数をMySQLから取得したデータで上書き
+# for device_id, people_inside in device_people_list:
+#     device_id_number = int(device_id.split('-')[0])  # "1-people-count" から "1" を取り出す
+#     facility_name = device_to_facility.get(device_id_number)
     
-    facility_name = device_to_facility.get(device_id_number)
-    
-    if facility_name:
-        campus_data.loc[facility_name, 'people_inside'] = people_inside
-        campus_data.loc[facility_name, 'condition'] = people_inside / campus_data.loc[facility_name, 'people_max']  # 最大収容人数に対する比率を計算
+#     if facility_name == "学生食堂":
+#         campus_data.loc[facility_name, 'people_inside'] = people_inside
+#         campus_data.loc[facility_name, 'condition'] = people_inside / campus_data.loc[facility_name, 'people_max']  # 最大収容人数に対する比率を計算
+
+# ------------------------ 各施設の condition を更新 ------------------------
+
+# 学生食堂以外の施設の人数と混雑率（condition）を計算
+for facility_name in campus_data.index:
+    # 学生食堂以外の場合
+    if facility_name != "学生食堂":
+        people_inside = campus_data.loc[facility_name, 'people_inside']
+        people_max = campus_data.loc[facility_name, 'people_max']
+        
+        # 混雑率（condition）を計算
+        campus_data.loc[facility_name, 'condition'] = people_inside / people_max
 
 # ------------------------サブタイトル------------------------
 
@@ -224,5 +354,3 @@ if st.button("リロード"):
 
 # 最後の更新時刻を表示
 st.write(f"最終更新時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-
