@@ -313,26 +313,14 @@ for facility_name in campus_data.index:
 # ------------------------サブタイトル------------------------
 
 # カラーバーを作成する関数
-# def create_colorbar():
-#     fig, ax = plt.subplots(figsize=(2.3, 0.05))  # サイズを横長に設定
-#     cmap = plt.get_cmap('Reds')
-#     norm = plt.Normalize(0, 1)
-#     cbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')  # 横向き
-#     cbar.ax.set_xticklabels([0, 25, 50, 75, "100(%)"], fontsize=5)  
-#     plt.close(fig)
-#     return fig
-
-
-# カラーバーを作成する関数（地図の幅に合わせる）
-def create_colorbar(map_width_px=300):
-    fig, ax = plt.subplots(figsize=(0.5, 0.01))  # サイズを横長に設定
+def create_colorbar():
+    fig, ax = plt.subplots(figsize=(2.3, 0.05))  # サイズを横長に設定
     cmap = plt.get_cmap('Reds')
     norm = plt.Normalize(0, 1)
     cbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')  # 横向き
-    cbar.ax.set_xticklabels([0, 25, 50, 75, "100(%)"], fontsize=2)  
+    cbar.ax.set_xticklabels([0, 25, 50, 75, "100(%)"], fontsize=5)  
     plt.close(fig)
     return fig
-    # 幅と高さを計算（matplotlib の dpi を基準に調整）
 
 # ------------------------画面作成------------------------
 
@@ -360,7 +348,7 @@ AreaMarker(campus_data, m)
 col1, col2, col3 = st.columns([1, 2, 1])  # 左1:中央2:右1 の比率でカラムを作成
 
 with col2:  # 中央のカラムに地図を配置
-    folium_static(m, width=300, height=400)
+    folium_static(m, width=600, height=800)
 
 # リロードボタンの追加
 if st.button("リロード"):
