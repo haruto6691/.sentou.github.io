@@ -348,7 +348,7 @@ AreaMarker(campus_data, m)
 col1, col2, col3 = st.columns([1, 2, 1])  # 左1:中央2:右1 の比率でカラムを作成
 
 with col2:  # 中央のカラムに地図を配置
-    folium_static(m, width=500, height=400)
+    folium_static(m, width=400, height=400)
 
 # リロードボタンの追加
 if st.button("リロード"):
