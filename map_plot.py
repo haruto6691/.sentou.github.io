@@ -358,8 +358,12 @@ if st.button("リロード"):
 # # 最後の更新時刻を表示
 # st.write(f"最終更新時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-# 現在の日時を取得
-last_updated_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+from zoneinfo import ZoneInfo
+# 日本時刻を取得
+japan_tz = ZoneInfo("Asia/Tokyo")
+last_updated_time = datetime.now(japan_tz).strftime('%Y-%m-%d %H:%M:%S')
 
 # 最終更新時間を表示
-st.write(f"最終更新時刻: {last_updated_time}")
+st.write(f"最終更新時間: {last_updated_time}")
