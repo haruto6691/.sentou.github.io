@@ -325,7 +325,7 @@ for facility_name in campus_data.index:
 
 # カラーバーを作成する関数（地図の幅に合わせる）
 def create_colorbar(map_width_px=300):
-    fig, ax = plt.subplots(figsize=(2.3, 0.05))  # サイズを横長に設定
+    fig, ax = plt.subplots(figsize=(1.8, 0.05))  # サイズを横長に設定
     cmap = plt.get_cmap('Reds')
     norm = plt.Normalize(0, 1)
     cbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')  # 横向き
