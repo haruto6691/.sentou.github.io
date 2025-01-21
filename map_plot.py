@@ -303,7 +303,7 @@ campus_data['people_inside'] = {
 # 学生食堂以外の施設の人数と混雑率（condition）を計算
 for facility_name in campus_data.index:
     # 学生食堂以外の場合
-    if facility_name != "学生食堂":
+    # if facility_name != "学生食堂":
         people_inside = campus_data.loc[facility_name, 'people_inside']
         people_max = campus_data.loc[facility_name, 'people_max']
         
