@@ -67,6 +67,7 @@ def get_icon_path(condition):
 # データを地図に渡す関数を作成
 def AreaMarker(df, m):
     for index, r in df.iterrows():
+        
         # 条件に基づいた画像アイコンパスを取得
         icon_path = get_icon_path(r['condition'])
 
