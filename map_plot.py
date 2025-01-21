@@ -312,16 +312,43 @@ for facility_name in campus_data.index:
 
 # ------------------------サブタイトル------------------------
 
-# カラーバーを作成する関数
-def create_colorbar():
-    fig, ax = plt.subplots(figsize=(2.3, 0.05))  # サイズを横長に設定
+# # カラーバーを作成する関数
+# def create_colorbar():
+#     fig, ax = plt.subplots(figsize=(2.3, 0.05))  # サイズを横長に設定
+#     cmap = plt.get_cmap('Reds')
+#     norm = plt.Normalize(0, 1)
+#     cbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')  # 横向き
+#     cbar.ax.set_xticklabels([0, 25, 50, 75, "100(%)"], fontsize=5)  
+#     plt.close(fig)
+#     return fig
+
+
+# カラーバーを作成する関数（地図の幅に合わせる）
+def create_colorbar(map_width_px=300):
+    # 幅と高さを計算（matplotlib の dpi を基準に調整）
+    dpi = 100  # デフォルト DPI
+    width_inch = map_width_px / dpi  # 地図の幅に基づくカラーバーの幅（インチ）
+    height_inch = 0.05  # カラーバーの高さ（インチ）
+    
+    fig, ax = plt.subplots(figsize=(width_inch, height_inch))  # サイズを設定
     cmap = plt.get_cmap('Reds')
     norm = plt.Normalize(0, 1)
-    cbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')  # 横向き
-    cbar.ax.set_xticklabels([0, 25, 50, 75, "100(%)"], fontsize=5)  
+    
+    # カラーバーを描画
+    cbar = plt.colorbar(
+        plt.cm.ScalarMappable(norm=norm, cmap=cmap),
+        cax=ax,
+        orientation='horizontal'
+    )
+    
+    # ラベルの調整
+    cbar.ax.tick_params(labelsize=8)  # フォントサイズを小さく
+    cbar.set_ticks([0, 0.25, 0.5, 0.75, 1])  # 適切な間隔で目盛りを設定
+    cbar.set_ticklabels(["0%", "25%", "50%", "75%", "100%"])  # ラベルを設定
+    
+    plt.subplots_adjust(left=0.1, right=0.9, top=0.5, bottom=0.5)  # レイアウト調整
     plt.close(fig)
     return fig
-
 # ------------------------画面作成------------------------
 
 # タイトル
