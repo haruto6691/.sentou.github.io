@@ -344,9 +344,11 @@ m = folium.Map(
 # データを地図に渡す
 AreaMarker(campus_data, m)
 
+# 地図を中央揃えで表示
+col1, col2, col3 = st.columns([1, 2, 1])  # 左1:中央2:右1 の比率でカラムを作成
 
-# 地図を表示
-folium_static(m, width=300, height=400)
+with col2:  # 中央のカラムに地図を配置
+    folium_static(m, width=300, height=400)
 
 # リロードボタンの追加
 if st.button("リロード"):
